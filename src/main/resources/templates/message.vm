@@ -1,0 +1,35 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Data for $date</title>
+    <style>
+        table,
+        td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Stocks Data</h2>
+
+<table>
+    <tr>
+        <th>Stock</th>
+        <th>Opening price</th>
+        <th>Closing price</th>
+    </tr>
+
+    #foreach ($stockEntry in $stocks)
+    <tr>
+        <td>$stockEntry.value.getName()</td>
+        <td>$stockEntry.value.getOpenPrice()</td>
+        <td>$stockEntry.value.getClosePrice()</td>
+    </tr>
+    #end
+
+</table>
+
+
+</body>

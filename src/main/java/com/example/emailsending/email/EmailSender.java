@@ -1,24 +1,21 @@
 package com.example.emailsending.email;
 
-import com.example.emailsending.dataReader.GenerateStockPriceInfo;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
 
-@Component("mimeMessageSender")
-public class MimeMessageSender implements EmailService{
+@Component("emailSender")
+public class EmailSender {
 
-    private final static Logger logger = LoggerFactory.getLogger(MimeMessageSender.class);
+    private final static Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
     @Value("${toEmail}")
     private String toEmail;
@@ -28,18 +25,18 @@ public class MimeMessageSender implements EmailService{
 
     private final JavaMailSender emailSender;
 
-    public MimeMessageSender(JavaMailSender emailSender) {
+    public EmailSender(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
 
-    @Override
-    public void sendEmail(String text, String subjectLine) throws MessagingException, ParseException {
+    public void sendEmail(String text, String subjectLine) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
         logger.info("mime message created");
         message.setFrom(fromEmail);
         message.setRecipients(Message.RecipientType.TO, toEmail);
-        message.setSubject(subjectLine);
-        message.setText(text);
+        helper.setSubject(subjectLine);
+        helper.setText(text, true);
         emailSender.send(message);
         logger.info("email sent successfully");
     }
