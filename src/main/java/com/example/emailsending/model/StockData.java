@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
 
 @Component
 @Scope("prototype")
@@ -20,11 +18,12 @@ public class StockData {
     private String boughtAtPrice;
     private String percentageIncrease; //use closing price
 
+    public StockData() {
+    }
 
     public StockData(String name) {
         this.name = name;
     }
-
 
 
     public String getName() {

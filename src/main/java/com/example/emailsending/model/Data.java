@@ -14,6 +14,9 @@ public class Data {
     @Value("${stocks}")
     private String[] stocksAnalysed;
 
+    @Value("${boughtAtPrices}")
+    private String[] boughtAtPrices;
+
     public String[] getStocksAnalysed() {
         return stocksAnalysed;
     }
@@ -21,9 +24,10 @@ public class Data {
     @PostConstruct
     public void inputStocksData() {
         for (int i = 0; i < stocksAnalysed.length; i++) {
-            stocks.put(stocksAnalysed[i], new StockData(stocksAnalysed[i]));
+            StockData stockData = new StockData(stocksAnalysed[i]);
+            stocks.put(stocksAnalysed[i], stockData);
+            stockData.setBoughtAtPrice(boughtAtPrices[i]);
         }
-
     }
 
     public HashMap<String, StockData> getStocks() {

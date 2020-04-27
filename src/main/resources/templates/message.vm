@@ -19,6 +19,7 @@
         <th>Stock</th>
         <th>Opening price</th>
         <th>Closing price</th>
+        <th>Bought At Price</th>
     </tr>
 
     #foreach ($stockEntry in $stocks)
@@ -26,6 +27,7 @@
         <td>$stockEntry.value.getName()</td>
         <td>$stockEntry.value.getOpenPrice()</td>
         <td>$stockEntry.value.getClosePrice()</td>
+        <td>$stockEntry.value.getBoughtAtPrice()</td>
     </tr>
     #end
 
