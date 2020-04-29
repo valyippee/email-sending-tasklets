@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS stock_data (
     Market_Date VARCHAR(20) NOT NULL,
     Opening_Price VARCHAR(20),
     Closing_Price VARCHAR(20),
-    PRIMARY KEY (Name)
+    CONSTRAINT stock_data_keys PRIMARY KEY (Name, Market_Date)
 );

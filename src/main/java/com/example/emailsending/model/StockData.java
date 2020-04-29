@@ -1,12 +1,10 @@
 package com.example.emailsending.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
+@IdClass(StockDataId.class)
 @Table(name = "stock_data")
 public class StockData {
 
@@ -14,6 +12,7 @@ public class StockData {
     @Column(name = "Name")
     private String name;
 
+    @Id
     @Column(name = "Market_Date")
     private String date;
 

@@ -5,6 +5,7 @@ import com.example.emailsending.email.EmailSender;
 import com.example.emailsending.email.MessageGenerator;
 import com.example.emailsending.model.Customer;
 import com.example.emailsending.model.StockData;
+import com.example.emailsending.model.StockDataId;
 import com.example.emailsending.repositories.CustomerRepository;
 import com.example.emailsending.repositories.StockDataRepository;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
@@ -68,17 +69,21 @@ public class EmailSendingApplication implements CommandLineRunner {
 		stockData1.setDate("2020-04-29");
 		stockData1.setOpenPrice("260");
 		stockData1.setClosePrice("263");
+		StockDataId id1 = new StockDataId("VOO", "2020-04-29");
+		stockDataRepository.save(stockData1);
+
 		StockData stockData2 = new StockData();
 		stockData2.setName("VOO");
 		stockData2.setDate("2020-04-30");
 		stockData2.setOpenPrice("250");
 		stockData2.setClosePrice("253");
-		stockDataRepository.save(stockData1);
+		StockDataId id2 = new StockDataId("VOO", "2020-04-30");
 		stockDataRepository.save(stockData2);
 
 		for (StockData stockData : stockDataRepository.findAll()) {
 			System.out.println(stockData.getName() + stockData.getClosePrice());
 		}
+		System.out.println(stockDataRepository.existsById(id1));
 
 
 //		HashMap<String, StockData> stocksCollection = infoGenerator.generateInfo();
