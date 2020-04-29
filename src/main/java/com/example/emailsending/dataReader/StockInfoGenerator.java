@@ -1,7 +1,7 @@
 package com.example.emailsending.dataReader;
 
-import com.example.emailsending.model.Data;
 import com.example.emailsending.model.StockData;
+import com.example.emailsending.repositories.StockDataRepository;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -14,11 +14,16 @@ import org.springframework.stereotype.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class StockInfoGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(StockInfoGenerator.class);
+
+    @Autowired
+    StockDataRepository stockDataRepository;
 
     @Value("${apiKey}")
     private String apiKey;
@@ -26,11 +31,12 @@ public class StockInfoGenerator {
     @Value("${stocks}")
     private String[] stocks;
 
-    @Autowired
-    private Data data;
-
     private URLParser urlParser = new URLParser();
 
+    /**
+     *
+     * @return the latest market opening date in yyyy-MM-dd format
+     */
     public static String getDate() {
         Calendar calendar = Calendar.getInstance();
         byte minusDays = -1;
@@ -46,11 +52,17 @@ public class StockInfoGenerator {
         return dateFormat.format(calendar.getTime());
     }
 
-    public void generateInfo() throws ParseException {
+    /**
+     *
+     * @return Hashmap<String, StockData>
+     * @throws ParseException
+     */
+    public HashMap<String, StockData> generateInfo() throws ParseException {
+        HashMap<String, StockData> stocksCollection = new HashMap<String, StockData>();
 
         for (int i = 0; i < stocks.length; i++) {
             String stockName = stocks[i];
-            StockData stockData = data.getStocks().get(stockName);
+            StockData stockData = new StockData();
             String url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
                     stockName +
                     "&apikey=" +
@@ -62,13 +74,24 @@ public class StockInfoGenerator {
             logger.info("obtained yesterday's " + stocks[i] + " stock price info as a json object");
             String openPrice = (String) currentData.get("1. open");
             String closePrice = (String) currentData.get("4. close");
+            stockData.setName(stockName);
             stockData.setClosePrice(closePrice);
             stockData.setOpenPrice(openPrice);
             stockData.setDate(getDate());
-            logger.info("successfully set all " + stockName + " data");
-
+            stocksCollection.put(stockName, stockData);
         }
+        logger.info("successfully extracted all data");
+        return stocksCollection;
+    }
 
+    /**
+     * @param stockDataRepository, Hashmap<String, StockData>
+     */
+    public void saveInfo(StockDataRepository stockDataRepository, HashMap<String, StockData> stocksCollection) {
+        for (Map.Entry<String, StockData> entry : stocksCollection.entrySet()) {
+            StockData stockData = entry.getValue();
+            stockDataRepository.save(stockData);
+        }
     }
 
 }

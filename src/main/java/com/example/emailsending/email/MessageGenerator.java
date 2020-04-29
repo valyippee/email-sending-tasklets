@@ -1,9 +1,6 @@
 package com.example.emailsending.email;
 
-import com.example.emailsending.EmailSendingApplication;
 import com.example.emailsending.dataReader.StockInfoGenerator;
-import com.example.emailsending.model.Data;
-import com.example.emailsending.model.StockData;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -17,15 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
-import java.util.HashMap;
 
 @Component
 public class MessageGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageGenerator.class);
-
-    @Autowired
-    private StockData data;
 
     @Autowired
     private StockInfoGenerator infoGenerator;
@@ -36,10 +29,9 @@ public class MessageGenerator {
     /**
      * construct HTML format email using stock data and velocity template
      *
-     * @param stock data
      * @return HTML format message with data in a string
      */
-    public String generateMessage(Data data) {
+    public String generateMessage() {
         Velocity.init();
 
         logger.info("initialised velocity");
@@ -55,7 +47,7 @@ public class MessageGenerator {
 
         // put stuff in context (from stock data class)
 
-        velocityContext.put("stocks", data.getStocks().entrySet());
+//        velocityContext.put("stocks", data.getStocks().entrySet());
         velocityContext.put("date", infoGenerator.getDate());
 
         StringWriter stringWriter = new StringWriter();

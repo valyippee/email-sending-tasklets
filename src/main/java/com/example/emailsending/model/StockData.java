@@ -1,30 +1,39 @@
 package com.example.emailsending.model;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
-@Component
-@Scope("prototype")
+@Entity
+@Table(name = "stock_data")
 public class StockData {
 
+    @Id
+    @Column(name = "Name")
     private String name;
+
+    @Column(name = "Market_Date")
     private String date;
+
+    @Column(name = "Opening_Price")
     private String openPrice;
+
+    @Column(name = "Closing_Price")
     private String closePrice;
-    private String fiftyTwoWeekHigh;
-    private String fiftyTwoWeekLow;
-    private String boughtAtPrice;
-    private String percentageIncrease; //use closing price
+//    private String fiftyTwoWeekHigh;
+//    private String fiftyTwoWeekLow;
+//    private String boughtAtPrice;
+//    private String percentageIncrease; //use closing price
 
     public StockData() {
     }
 
-    public StockData(String name) {
+
+    public void setName(String name) {
         this.name = name;
     }
-
 
     public String getName() {
         return name;
@@ -54,35 +63,45 @@ public class StockData {
         this.closePrice = closePrice;
     }
 
-    public String getFiftyTwoWeekHigh() {
-        return fiftyTwoWeekHigh;
-    }
+//    public String getFiftyTwoWeekHigh() {
+//        return fiftyTwoWeekHigh;
+//    }
+//
+//    public void setFiftyTwoWeekHigh(String fiftyTwoWeekHigh) {
+//        this.fiftyTwoWeekHigh = fiftyTwoWeekHigh;
+//    }
+//
+//    public String getFiftyTwoWeekLow() {
+//        return fiftyTwoWeekLow;
+//    }
+//
+//    public void setFiftyTwoWeekLow(String fiftyTwoWeekLow) {
+//        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
+//    }
+//
+//    public String getBoughtAtPrice() {
+//        return boughtAtPrice;
+//    }
+//
+//    public void setBoughtAtPrice(String boughtAtPrice) {
+//        this.boughtAtPrice = boughtAtPrice;
+//    }
+//
+//    public String getPercentageIncrease() {
+//        return percentageIncrease;
+//    }
+//
+//    public void setPercentageIncrease(String percentageIncrease) {
+//        this.percentageIncrease = percentageIncrease;
+//    }
 
-    public void setFiftyTwoWeekHigh(String fiftyTwoWeekHigh) {
-        this.fiftyTwoWeekHigh = fiftyTwoWeekHigh;
-    }
-
-    public String getFiftyTwoWeekLow() {
-        return fiftyTwoWeekLow;
-    }
-
-    public void setFiftyTwoWeekLow(String fiftyTwoWeekLow) {
-        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
-    }
-
-    public String getBoughtAtPrice() {
-        return boughtAtPrice;
-    }
-
-    public void setBoughtAtPrice(String boughtAtPrice) {
-        this.boughtAtPrice = boughtAtPrice;
-    }
-
-    public String getPercentageIncrease() {
-        return percentageIncrease;
-    }
-
-    public void setPercentageIncrease(String percentageIncrease) {
-        this.percentageIncrease = percentageIncrease;
+    @Override
+    public String toString() {
+        return "StockData{" +
+                "name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", openPrice='" + openPrice + '\'' +
+                ", closePrice='" + closePrice + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Stock Data for $date</title>
+    <title>Stock Data as of $date</title>
     <style>
         table,
         td, th {

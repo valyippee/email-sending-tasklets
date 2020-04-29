@@ -1,5 +1,8 @@
 package com.example.emailsending.email;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +32,24 @@ public class EmailSender {
         this.emailSender = emailSender;
     }
 
-    public void sendEmail(String text, String subjectLine) throws MessagingException {
+    /**
+     * @return today's date as a string in yyyy/MM/dd dayOfWeek format
+     */
+    public static String getTodayDate() {
+        DateTime dateTime = new DateTime();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("EEEE");
+        String date = dateTime.toString("yyyy/MM/dd");
+        String dayOfWeek = formatter.print(dateTime);
+        return date + " " + dayOfWeek;
+    }
+
+    public void sendEmail(String text) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         logger.info("mime message created");
         message.setFrom(fromEmail);
         message.setRecipients(Message.RecipientType.TO, toEmail);
-        helper.setSubject(subjectLine);
+        helper.setSubject("Stock price info: " + getTodayDate());
         helper.setText(text, true);
         emailSender.send(message);
         logger.info("email sent successfully");
