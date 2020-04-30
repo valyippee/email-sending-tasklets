@@ -43,6 +43,11 @@ public class EmailSender {
         return date + " " + dayOfWeek;
     }
 
+    /**
+     *
+     * @param text
+     * @throws MessagingException
+     */
     public void sendEmail(String text) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);

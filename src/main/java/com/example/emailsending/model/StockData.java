@@ -21,14 +21,59 @@ public class StockData {
 
     @Column(name = "Closing_Price")
     private String closePrice;
+
 //    private String fiftyTwoWeekHigh;
 //    private String fiftyTwoWeekLow;
-//    private String boughtAtPrice;
-//    private String percentageIncrease; //use closing price
+
+    @Column(name = "Bought_At_Price")
+    private String boughtAtPrice;
+
+    @Column(name = "Bought_At_Quantity")
+    private String boughtAtQuantity;
+
+    @Column(name = "Profit")
+    private String profit;
+
+    @Column(name = "Percentage_Increase")
+    private String percentageIncrease; //use closing price
+
+    @Column(name = "Previous_Market_Date")
+    private String previousMarketDate;
 
     public StockData() {
     }
 
+    public String getPreviousMarketDate() {
+        return previousMarketDate;
+    }
+
+    public void setPreviousMarketDate(String previousMarketDate) {
+        this.previousMarketDate = previousMarketDate;
+    }
+
+    public String getPercentageIncrease() {
+        return percentageIncrease;
+    }
+
+    public void setPercentageIncrease(String percentageIncrease) {
+        this.percentageIncrease = percentageIncrease;
+    }
+
+    public String getBoughtAtQuantity() {
+        return boughtAtQuantity;
+    }
+
+    public void setBoughtAtQuantity(String boughtAtQuantity) {
+        this.boughtAtQuantity = boughtAtQuantity;
+    }
+
+    public String getProfit() {
+        return profit;
+    }
+
+    public void setProfit(String profit) {
+        this.profit = profit;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -77,15 +122,15 @@ public class StockData {
 //    public void setFiftyTwoWeekLow(String fiftyTwoWeekLow) {
 //        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
 //    }
-//
-//    public String getBoughtAtPrice() {
-//        return boughtAtPrice;
-//    }
-//
-//    public void setBoughtAtPrice(String boughtAtPrice) {
-//        this.boughtAtPrice = boughtAtPrice;
-//    }
-//
+
+    public String getBoughtAtPrice() {
+        return boughtAtPrice;
+    }
+
+    public void setBoughtAtPrice(String boughtAtPrice) {
+        this.boughtAtPrice = boughtAtPrice;
+    }
+
 //    public String getPercentageIncrease() {
 //        return percentageIncrease;
 //    }

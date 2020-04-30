@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Stock Data as of $date</title>
+    <title>Stock Data</title>
     <style>
         table,
         td, th {
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<h2>Stocks Data</h2>
+<h2>Stocks Data for $date</h2>
 
 <table>
     <tr>
@@ -20,14 +20,20 @@
         <th>Opening price</th>
         <th>Closing price</th>
         <th>Bought At Price</th>
+        <th>Bought At Quantity</th>
+        <th>Profit</th>
+        <th>Percentage Increase (from previous market open day)</th>
     </tr>
 
-    #foreach ($stockEntry in $stocks)
+    #foreach ($stockData in $stocks)
     <tr>
-        <td>$stockEntry.value.getName()</td>
-        <td>$stockEntry.value.getOpenPrice()</td>
-        <td>$stockEntry.value.getClosePrice()</td>
-        <td>$stockEntry.value.getBoughtAtPrice()</td>
+        <td>$stockData.getName()</td>
+        <td>$stockData.getOpenPrice()</td>
+        <td>$stockData.getClosePrice()</td>
+        <td>$stockData.getBoughtAtPrice()</td>
+        <td>$stockData.getBoughtAtQuantity()</td>
+        <td>$stockData.getProfit()</td>
+        <td>$stockData.getPercentageIncrease()</td>
     </tr>
     #end
 

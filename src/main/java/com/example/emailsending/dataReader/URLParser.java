@@ -18,6 +18,12 @@ public class URLParser {
 
     private static final Logger logger = LoggerFactory.getLogger(URLParser.class);
 
+    /**
+     *
+     * @param url
+     * @return String of JSON data
+     * @throws JSONException
+     */
     private String sendGetRequest(String url) throws JSONException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
@@ -34,6 +40,13 @@ public class URLParser {
         }
     }
 
+    /**
+     *
+     * @param url
+     * @return JSONObject with stock data in time series
+     * @throws JSONException
+     * @throws ParseException
+     */
     public JSONObject extractData(String url) throws JSONException, ParseException {
         String rawData = sendGetRequest(url);
         logger.info("parsing raw data into Json object");
