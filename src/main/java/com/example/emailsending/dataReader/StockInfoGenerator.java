@@ -116,6 +116,7 @@ public class StockInfoGenerator {
                 apiKey;
         JSONObject jsonObject = urlParser.extractData(url);
         JSONObject timeSeries = (JSONObject) jsonObject.get("Time Series (Daily)");
+        logger.info("time series: " + timeSeries);
         logger.info("obtained time series of " + stockName + " as a json object");
         return timeSeries;
     }
@@ -135,13 +136,7 @@ public class StockInfoGenerator {
 
         logger.info("calculating percentage increase for " + stockName);
 
-        if (stockDataRepository.existsById(previousStockDataId)) {
-            logger.info("previous day data is in database");
-            String previousClosePrice = stockDataRepository.findById(previousStockDataId).get().getClosePrice();
-            logger.info("Previous close price: " + previousClosePrice);
-            increase = String.valueOf((Double.parseDouble(previousClosePrice) - Double.parseDouble(currentClosePrice))
-                    * Double.parseDouble(previousClosePrice));
-        } else {
+        if (!stockDataRepository.existsById(previousStockDataId)) {
             logger.info("previous day data is not in database");
             JSONObject previousDayData = (JSONObject) timeSeries.get(previousMarketDate);
             String openPrice = (String) previousDayData.get("1. open");
@@ -152,11 +147,13 @@ public class StockInfoGenerator {
             previousStockData.setName(stockName);
             previousStockData.setDate(previousMarketDate);
             stockDataRepository.save(previousStockData);
-            logger.info("Current close price: " + currentClosePrice);
-            logger.info("Previous close price: " + closePrice);
-            increase = String.valueOf((double) ((Double.parseDouble(currentClosePrice) - Double.parseDouble(closePrice))
-                    / Double.parseDouble(closePrice)) * 100);
         }
+
+        String previousClosePrice = stockDataRepository.findById(previousStockDataId).get().getClosePrice();
+        logger.info("Previous close price: " + previousClosePrice);
+
+        increase = String.valueOf((double) ((Double.parseDouble(currentClosePrice) - Double.parseDouble(previousClosePrice))
+                / Double.parseDouble(previousClosePrice)) * 100);
 
         logger.info("Percentage increase calculated for " + stockName + ": " + increase);
 
@@ -191,6 +188,7 @@ public class StockInfoGenerator {
             StockData stockData = new StockData();
             JSONObject timeSeries = requestInfo(stockName, marketDate);
             JSONObject currentData = (JSONObject) timeSeries.get(getDate());
+            logger.info("current data: " + currentData);
             String openPrice = (String) currentData.get("1. open");
             String closePrice = (String) currentData.get("4. close");
 

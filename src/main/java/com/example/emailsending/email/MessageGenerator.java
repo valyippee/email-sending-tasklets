@@ -57,7 +57,11 @@ public class MessageGenerator {
         List<StockData> stockDataList = new ArrayList<StockData>();
         for (StockData stockData : stockDataRepository.findAll()) {
             if (stockData.getDate().equals(marketDate)) {
-                stockDataList.add(stockData);
+                for (String stock : stocksAnalysed) {
+                    if (stockData.getName().equals(stock)) {
+                        stockDataList.add(stockData);
+                    }
+                }
             }
         }
 
