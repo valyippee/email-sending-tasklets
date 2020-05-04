@@ -6,9 +6,11 @@ import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
@@ -25,6 +27,9 @@ public class EmailSender {
 
     @Value("${spring.mail.username}")
     private String fromEmail;
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     private final JavaMailSender emailSender;
 
@@ -45,18 +50,28 @@ public class EmailSender {
 
     /**
      *
-     * @param text
      * @throws MessagingException
      */
-    public void sendEmail(String text) throws MessagingException {
+    public MimeMessage generateEmail() throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         logger.info("mime message created");
         message.setFrom(fromEmail);
         message.setRecipients(Message.RecipientType.TO, toEmail);
         helper.setSubject("Stock price info: " + getTodayDate());
-        helper.setText(text, true);
-        emailSender.send(message);
-        logger.info("email sent successfully");
+        helper.setText(messageGenerator.generateMessage(), true);
+        logger.info("email created successfully");
+
+        return message;
+
+//        emailSender.send(message);
+//        logger.info("email sent successfully");
+
+
+    }
+
+    @Scheduled(fixedRate = 4000)
+    public void generateMessage() {
+        System.out.println("trying out scheduling");
     }
 }
