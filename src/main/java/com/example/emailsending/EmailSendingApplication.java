@@ -18,25 +18,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.mail.MessagingException;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
 @SpringBootApplication
 @EnableScheduling
-public class EmailSendingApplication implements CommandLineRunner {
+public class EmailSendingApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmailSendingApplication.class);
-
-	@Autowired
-	private EmailSender emailSender;
-
-//	@Autowired
-//	private StockInfoGenerator infoGenerator;
-//
-//	@Autowired
-//	private MessageGenerator messageGenerator;
 
 	@Autowired
 	JobLauncher jobLauncher;
@@ -44,46 +30,27 @@ public class EmailSendingApplication implements CommandLineRunner {
 	@Autowired
 	Job job;
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(EmailSendingApplication.class, args);
 
 	}
 
-//	@Scheduled(fixedRate = 1000)
-//	public void launchJob() throws Exception {
-//		JobParameters params = new JobParametersBuilder()
-//								.addString("JobID", String.valueOf(System.currentTimeMillis()))
-//								.toJobParameters();
-//		jobLauncher.run(job, params);
-//		System.out.println("in launch job method");
-//	}
-
-	@Override
-	public void run(String... args) throws Exception {
-
-		logger.info("running the application");
-
-		JobParameters params = new JobParametersBuilder()
-				.addString("JobID", String.valueOf(System.currentTimeMillis()))
-				.toJobParameters();
-		jobLauncher.run(job, params);
-
-
-//		try {
-//			infoGenerator.settingInfo();
-//		} catch (ParseException e) {
-//			logger.error("Error: " + e);
-//		}
-//
-//
-//		String message = messageGenerator.generateMessage();
-//
-//		try {
-//			emailSender.generateEmail();
-//		} catch (MessagingException e) {
-//			logger.error("Error: " + e);
-//		}
+	/**
+	 * job is launched every day from tuesday to saturday
+	 * @throws Exception
+	 */
+	@Scheduled(cron = "0 0 0 ? * TUE,WED,THU,FRI,SAT *")
+	public void launchJob() {
+		try {
+			JobParameters params = new JobParametersBuilder()
+					.addString("JobID", String.valueOf(System.currentTimeMillis()))
+					.toJobParameters();
+			logger.info("launching job");
+			jobLauncher.run(job, params);
+		} catch (Exception e) {
+			logger.info("job failed to launch");
+		}
 
 	}
+
 }
