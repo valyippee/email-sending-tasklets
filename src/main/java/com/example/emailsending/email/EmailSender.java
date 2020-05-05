@@ -3,14 +3,12 @@ package com.example.emailsending.email;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
@@ -31,10 +29,10 @@ public class EmailSender {
     @Autowired
     private MessageGenerator messageGenerator;
 
-    private final JavaMailSender emailSender;
+    private final JavaMailSender javaMailSender;
 
     public EmailSender(JavaMailSender emailSender) {
-        this.emailSender = emailSender;
+        this.javaMailSender = emailSender;
     }
 
     /**
@@ -49,11 +47,11 @@ public class EmailSender {
     }
 
     /**
-     *
+     * @return mime message
      * @throws MessagingException
      */
-    public MimeMessage generateEmail() throws MessagingException {
-        MimeMessage message = emailSender.createMimeMessage();
+    public void sendEmail() throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         logger.info("mime message created");
         message.setFrom(fromEmail);
@@ -61,17 +59,7 @@ public class EmailSender {
         helper.setSubject("Stock price info: " + getTodayDate());
         helper.setText(messageGenerator.generateMessage(), true);
         logger.info("email created successfully");
-
-        return message;
-
-//        emailSender.send(message);
-//        logger.info("email sent successfully");
-
-
-    }
-
-    @Scheduled(fixedRate = 4000)
-    public void generateMessage() {
-        System.out.println("trying out scheduling");
+        javaMailSender.send(message);
+        logger.info("email sent successfully");
     }
 }

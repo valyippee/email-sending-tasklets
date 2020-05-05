@@ -75,6 +75,9 @@ public class StockInfoGenerator {
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
             minusDays = -4;
         }
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
+            minusDays = -5;
+        }
         calendar.add(Calendar.DATE, minusDays);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(calendar.getTime());
@@ -180,7 +183,7 @@ public class StockInfoGenerator {
      * @return
      * @throws ParseException
      */
-    public void settingInfo () throws ParseException {
+    public void settingInfo() throws ParseException {
         ArrayList<String> stocksNotInDatabase = checkDatabase();
         for (int i = 0; i < stocksNotInDatabase.size(); i++) {
             String stockName = stocksNotInDatabase.get(i);
