@@ -106,6 +106,12 @@
 						<goals>
 							<goal>repackage</goal>
 						</goals>
+						<configuration>
+							<classifier>spring-boot</classifier>
+							<mainClass>
+								com.example.emailsending.EmailSendingApplication
+							</mainClass>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
