@@ -13,8 +13,6 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
-
 /**
  * tasklet to send email by calling EmailSender sendEmail() method
  */

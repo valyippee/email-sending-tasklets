@@ -1,7 +1,5 @@
 package com.example.emailsending.batch;
 
-import com.example.emailsending.batch.EmailSendingTask;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;

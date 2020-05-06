@@ -1,7 +1,6 @@
 package com.example.emailsending.batch;
 
 import com.example.emailsending.dataReader.StockInfoGenerator;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;

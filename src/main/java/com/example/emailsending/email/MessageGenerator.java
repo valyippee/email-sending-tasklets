@@ -72,7 +72,5 @@ public class MessageGenerator {
         template.merge(velocityContext, stringWriter);
 
         return stringWriter.toString();
-
-
     }
 }
