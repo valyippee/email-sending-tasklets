@@ -25,16 +25,16 @@ public class StockInfoGenerator {
     @Autowired
     private StockDataRepository stockDataRepository;
 
-    @Value("${apiKey}")
+    @Value("${api.key}")
     private String apiKey;
 
     @Value("${stocks}")
     private String[] stocks;
 
-    @Value("${boughtAtPrices}")
+    @Value("${bought.at.prices}")
     private String[] boughtAtPrices;
 
-    @Value("${boughtAtQuantities}")
+    @Value("${bought.at.quantities}")
     private String[] boughtAtQuantities;
 
     private URLParser urlParser = new URLParser();

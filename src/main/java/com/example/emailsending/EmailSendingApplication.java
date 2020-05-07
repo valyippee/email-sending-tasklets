@@ -32,7 +32,7 @@ public class EmailSendingApplication {
 	 * job is launched at a time specified by cron expression
 	 */
 
-	@Scheduled(cron = "${cronExpression}")
+	@Scheduled(cron = "${cron.expression}")
 	public void launchJob() {
 		try {
 			JobParameters params = new JobParametersBuilder()

@@ -22,9 +22,6 @@ public class StockData {
     @Column(name = "Closing_Price")
     private String closePrice;
 
-//    private String fiftyTwoWeekHigh;
-//    private String fiftyTwoWeekLow;
-
     @Column(name = "Bought_At_Price")
     private String boughtAtPrice;
 
@@ -107,22 +104,6 @@ public class StockData {
         this.closePrice = closePrice;
     }
 
-//    public String getFiftyTwoWeekHigh() {
-//        return fiftyTwoWeekHigh;
-//    }
-//
-//    public void setFiftyTwoWeekHigh(String fiftyTwoWeekHigh) {
-//        this.fiftyTwoWeekHigh = fiftyTwoWeekHigh;
-//    }
-//
-//    public String getFiftyTwoWeekLow() {
-//        return fiftyTwoWeekLow;
-//    }
-//
-//    public void setFiftyTwoWeekLow(String fiftyTwoWeekLow) {
-//        this.fiftyTwoWeekLow = fiftyTwoWeekLow;
-//    }
-
     public String getBoughtAtPrice() {
         return boughtAtPrice;
     }
@@ -130,14 +111,6 @@ public class StockData {
     public void setBoughtAtPrice(String boughtAtPrice) {
         this.boughtAtPrice = boughtAtPrice;
     }
-
-//    public String getPercentageIncrease() {
-//        return percentageIncrease;
-//    }
-//
-//    public void setPercentageIncrease(String percentageIncrease) {
-//        this.percentageIncrease = percentageIncrease;
-//    }
 
     @Override
     public String toString() {

@@ -15,12 +15,12 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Component("emailSender")
+@Component
 public class EmailSender {
 
     private final static Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
-    @Value("${toEmail}")
+    @Value("${to.email}")
     private String toEmail;
 
     @Value("${spring.mail.username}")
@@ -36,14 +36,12 @@ public class EmailSender {
     }
 
     /**
-     * @return today's date as a string in yyyy/MM/dd dayOfWeek format
+     * @return today's date as a string in yyyy/MM/dd + dayOfWeek format
      */
     public static String getTodayDate() {
         DateTime dateTime = new DateTime();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("EEEE");
-        String date = dateTime.toString("yyyy/MM/dd");
-        String dayOfWeek = formatter.print(dateTime);
-        return date + " " + dayOfWeek;
+        return dateTime.toString() + " " + formatter.print(dateTime);
     }
 
     /**
@@ -53,12 +51,10 @@ public class EmailSender {
     public void sendEmail() throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        logger.info("mime message created");
         message.setFrom(fromEmail);
         message.setRecipients(Message.RecipientType.TO, toEmail);
         helper.setSubject("Stock price info: " + getTodayDate());
         helper.setText(messageGenerator.generateMessage(), true);
-        logger.info("email created successfully");
         javaMailSender.send(message);
         logger.info("email sent successfully");
     }
