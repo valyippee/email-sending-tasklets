@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,7 +29,7 @@ public class EmailSendingApplication {
 	}
 
 	/**
-	 * job is launched every day from tuesday to saturday
+	 * job is launched at a time specified by cron expression
 	 */
 
 	@Scheduled(cron = "${cronExpression}")
