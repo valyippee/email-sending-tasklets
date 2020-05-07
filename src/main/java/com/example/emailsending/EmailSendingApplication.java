@@ -1,5 +1,6 @@
 package com.example.emailsending;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.*;
@@ -14,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @SpringBootApplication
 @EnableScheduling
 @EnableAutoConfiguration
+@EnableEncryptableProperties
 public class EmailSendingApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmailSendingApplication.class);
