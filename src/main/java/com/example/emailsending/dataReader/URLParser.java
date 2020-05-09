@@ -10,6 +10,8 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class URLParser {
 
     private static final Logger logger = LoggerFactory.getLogger(URLParser.class);
@@ -22,6 +24,8 @@ public class URLParser {
      */
     private String sendGetRequest(String url) throws JSONException {
         OkHttpClient client = new OkHttpClient();
+        client.setConnectTimeout(15, TimeUnit.SECONDS);
+        client.setReadTimeout(15, TimeUnit.SECONDS);
         Request request = new Request.Builder().url(url).build();
         logger.info("request created");
         try {

@@ -13,6 +13,8 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.mail.MessagingException;
+
 /**
  * tasklet to send email by calling EmailSender sendEmail() method
  */
@@ -36,7 +38,7 @@ public class EmailSendingTask implements Tasklet, StepExecutionListener {
      * @return RepeatStatus of the step
      */
     @Override
-    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws MessagingException {
         logger.info("inside email sending task");
 
         try {
@@ -49,6 +51,7 @@ public class EmailSendingTask implements Tasklet, StepExecutionListener {
                 return RepeatStatus.CONTINUABLE;
             }
             if (counter == 3) {
+                e.printStackTrace();
                 logger.error("email cannot be sent (after three tries)");
             }
         }

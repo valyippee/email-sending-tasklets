@@ -71,6 +71,8 @@ public class MessageGenerator {
         StringWriter stringWriter = new StringWriter();
         template.merge(velocityContext, stringWriter);
 
+        logger.info("message created successfully");
+
         return stringWriter.toString();
     }
 }

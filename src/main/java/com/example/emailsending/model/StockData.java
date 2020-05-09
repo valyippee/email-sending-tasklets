@@ -9,32 +9,32 @@ import javax.persistence.*;
 public class StockData {
 
     @Id
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
     @Id
-    @Column(name = "Market_Date")
+    @Column(name = "market_date")
     private String date;
 
-    @Column(name = "Opening_Price")
+    @Column(name = "opening_price")
     private String openPrice;
 
-    @Column(name = "Closing_Price")
+    @Column(name = "closing_price")
     private String closePrice;
 
-    @Column(name = "Bought_At_Price")
+    @Column(name = "bought_at_price")
     private String boughtAtPrice;
 
-    @Column(name = "Bought_At_Quantity")
+    @Column(name = "bought_at_quantity")
     private String boughtAtQuantity;
 
-    @Column(name = "Profit")
+    @Column(name = "profit")
     private String profit;
 
-    @Column(name = "Percentage_Increase")
+    @Column(name = "percentage_increase")
     private String percentageIncrease; //use closing price
 
-    @Column(name = "Previous_Market_Date")
+    @Column(name = "previous_market_date")
     private String previousMarketDate;
 
     public StockData() {
