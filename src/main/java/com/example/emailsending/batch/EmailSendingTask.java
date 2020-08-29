@@ -47,13 +47,7 @@ public class EmailSendingTask implements Tasklet, StepExecutionListener {
             emailSentStatus = true;
         } catch (Exception e) {
             logger.error("messaging exception, email not sent");
-            if (counter < 3) {
-                return RepeatStatus.CONTINUABLE;
-            }
-            if (counter == 3) {
-                e.printStackTrace();
-                logger.error("email cannot be sent (after three tries)");
-            }
+            e.printStackTrace();
         }
 
         return RepeatStatus.FINISHED;
